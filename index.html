@@ -796,9 +796,8 @@
             .crop-instructions { font-size: 0.6rem; }
         }
 
-                @media (display-mode: standalone) {
+                        @media (display-mode: standalone) {
             :root { 
-                /* FIX: Set safe-area variables to 0px in standalone mode to use the full screen. */
                 --safe-area-top: 0px; 
                 --safe-area-bottom: 0px;
                 --safe-area-left: 0px;
@@ -807,13 +806,21 @@
             html, body { width: 100vw; height: 100vh; height: 100dvh; position: fixed; overflow: hidden; }
             .main-app-container {
                 width: 100vw; height: 100vh; height: 100dvh; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-                padding-top: calc(var(--header-base-height) + var(--safe-area-top)); 
-                padding-bottom: calc(var(--footer-base-height) + var(--safe-area-bottom)); /* Use safe area for footer */
+                padding-top: var(--header-base-height); 
+                /* FIX: Set padding-bottom directly to footer height, ignoring safe-area */
+                padding-bottom: var(--footer-base-height);
             }
-            .header { height: calc(var(--header-base-height) + var(--safe-area-top)); padding-top: calc(8px + var(--safe-area-top)); padding-bottom: 8px; }
-            .footer-controls { height: calc(var(--footer-base-height) + var(--safe-area-bottom)); padding-bottom: calc(8px + var(--safe-area-bottom)); padding-top: 8px; }
-            .accordion-panel { bottom: calc(var(--footer-base-height) + var(--safe-area-bottom) + 10px); max-height: calc(40vh - var(--footer-base-height) - 20px); }
-            .crop-modal { padding: calc(var(--safe-area-top) + 6px) calc(var(--safe-area-right) + 6px) calc(var(--safe-area-bottom) + 6px) calc(var(--safe-area-left) + 6px); }
+            .header { height: var(--header-base-height); padding-top: 8px; padding-bottom: 8px; }
+            /* FIX: Set footer height and padding directly, ignoring safe-area */
+            .footer-controls { 
+                height: var(--footer-base-height); 
+                padding: 8px 12px; 
+            }
+            .accordion-panel { 
+                bottom: calc(var(--footer-base-height) + 10px); 
+                max-height: calc(40vh - var(--footer-base-height) - 20px); 
+            }
+            .crop-modal { padding: 6px; }
         }
 
         .will-change-transform { will-change: transform; }
